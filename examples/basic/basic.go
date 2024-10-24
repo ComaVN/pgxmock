@@ -3,16 +3,11 @@ package main
 import (
 	"context"
 
-	pgx "github.com/jackc/pgx/v5"
 	pgxpool "github.com/jackc/pgx/v5/pgxpool"
+	"github.com/pashagolub/pgxmock/v4"
 )
 
-type PgxIface interface {
-	Begin(context.Context) (pgx.Tx, error)
-	Close()
-}
-
-func recordStats(db PgxIface, userID, productID int) (err error) {
+func recordStats(db pgxmock.PgxPoolIface, userID, productID int) (err error) {
 	tx, err := db.Begin(context.Background())
 	if err != nil {
 		return
